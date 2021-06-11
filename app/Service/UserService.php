@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Service\System;
+namespace App\Service;
 
 use App\Model\Core\Message;
-use App\Model\System\AvatarImage;
 use App\Service\Base\Service;
-use App\User;
+use App\Model\User;
 use Exception;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
@@ -17,14 +15,6 @@ use Illuminate\Support\MessageBag;
 
 class UserService extends Service
 {
-    private $avatarImageService;
-
-    public function __construct(Model $model)
-    {
-        parent::__construct($model);
-        $this->avatarImageService = new AvatarImageService(new AvatarImage());
-    }
-
     /**
      * @param array|string[] $columns
      * @return Message
@@ -115,37 +105,7 @@ class UserService extends Service
         $data['email'] = $user->email;
 
         $data['email'] = $user->email;
-        $message = parent::update($data, $user->id);
-
-        if ($message->isError()) {
-            return $message;
-        }
-
-        if (array_key_exists('file', $data)) {
-            $user = $this->guard()->user();
-            $data['user_id'] = $user->id;
-
-            if ($user->avatar->count() > 0) {
-                try {
-                    $this->avatarImageService->delete($user->avatar());
-                } catch (Exception $e) {
-                    return $this->message->error($e->getMessage(), null, '');
-                }
-            }
-
-            $messageAvatar = $this->avatarImageService->create($data);
-
-            if ($messageAvatar->isError()) {
-                //senão conseguir fazer o upload só informa que não conseguiu pois o usuário já foi salvo
-                return $this->message->warning(
-                    $messageAvatar->getMessage(),
-                    $message->getData(),
-                    $messageAvatar->getErrors()
-                );
-            }
-        }
-
-        return $message;
+        return parent::update($data, $user->id);
     }
 
     /**
