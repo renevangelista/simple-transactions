@@ -43,5 +43,6 @@ return [
         'unauthorized_transaction' => 'Transação não autorizada.',
         'authorized_transaction' => 'Transação autorizada.',
         'you_cant_pay_yourself' => 'Não é possível pagar a si mesmo.',
+        'notification_sent_successfully' => 'Notificação enviada com sucesso.',
     ],
 ];

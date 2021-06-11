@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Jobs\NotifyPayment;
 use App\Model\Core\Message;
 use App\Model\Shopkeeper;
 use App\Model\User;
@@ -112,6 +113,8 @@ class TransactionService
             return $message;
         }
 
+        NotifyPayment::dispatch();
+
         return $this->message->success(trans('system.messages.success'), null);
     }
 
@@ -137,6 +140,8 @@ class TransactionService
         if ($message->isError()) {
             return $message;
         }
+
+        NotifyPayment::dispatch();
 
         return $this->message->success(trans('system.messages.success'), null);
     }
@@ -224,7 +229,6 @@ class TransactionService
     }
 
     /**
-     * @param int $id
      * @return array
      */
     public function rules(): array

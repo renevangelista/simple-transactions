@@ -43,5 +43,6 @@ return [
         'unauthorized_transaction' => 'Unauthorized transaction.',
         'authorized_transaction' => 'Authorized transaction.',
         'you_cant_pay_yourself' => 'You can\'t pay yourself.',
+        'notification_sent_successfully' => 'Notification sent successfully.',
     ],
 ];
