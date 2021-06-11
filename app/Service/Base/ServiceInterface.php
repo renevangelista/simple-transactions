@@ -2,10 +2,12 @@
 
 namespace App\Service\Base;
 
+use App\Model\Core\Message;
+use Illuminate\Contracts\Auth\Guard;
+
 /**
  * Interface ServiceInterface
  * @package App\Service\Base
- * @author Filipe Fico
  */
 interface ServiceInterface
 {
@@ -18,9 +20,9 @@ interface ServiceInterface
     /**
      * @param $id
      * @param array $columns
-     * @return mixed
+     * @return Message
      */
-    public function find($id, array $columns = ['*']);
+    public function find($id, array $columns = ['*']): Message;
 
     /**
      * @param array $criteria
@@ -28,7 +30,7 @@ interface ServiceInterface
      * @param null $limit
      * @param null $offset
      * @param array $columns
-     * @return mixed
+     * @return Message
      */
     public function findBy(
         array $criteria = [],
@@ -36,7 +38,7 @@ interface ServiceInterface
         $limit = null,
         $offset = null,
         array $columns = ['*']
-    );
+    ): Message;
 
     /**
      * @param array $criteria
@@ -44,7 +46,7 @@ interface ServiceInterface
      * @param null $limit
      * @param null $offset
      * @param array $columns
-     * @return mixed
+     * @return Message
      */
     public function findOneBy(
         array $criteria = [],
@@ -52,7 +54,7 @@ interface ServiceInterface
         $limit = null,
         $offset = null,
         array $columns = ['*']
-    );
+    ): Message;
 
     /**
      * @param array $searchCriteria
@@ -61,7 +63,7 @@ interface ServiceInterface
      * @param null $limit
      * @param null $offset
      * @param array $columns
-     * @return mixed
+     * @return Message
      */
     public function searchBy(
         array $searchCriteria = [],
@@ -70,31 +72,31 @@ interface ServiceInterface
         $limit = null,
         $offset = null,
         array $columns = ['*']
-    );
+    ): Message;
 
     /**
      * @param array $data
-     * @return mixed
+     * @return Message
      */
-    public function create(array $data);
+    public function create(array $data): Message;
 
     /**
      * @param array $data
      * @param $id
-     * @return mixed
+     * @return Message
      */
-    public function update(array $data, $id);
+    public function update(array $data, $id): Message;
 
     /**
      * @param $id
-     * @return mixed
+     * @return Message
      */
-    public function delete($id);
+    public function delete($id): Message;
 
     /**
-     * @return mixed
+     * @return Guard
      */
-    public function guard();
+    public function guard(): Guard;
 
     /**
      * @param array $data

@@ -8,7 +8,7 @@ use App\Model\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Password;
 
-class UserService extends Service
+class ShopkeeperService extends Service
 {
     /**
      * @param array|string[] $columns
@@ -23,6 +23,24 @@ class UserService extends Service
             null,
             $columns
         );
+    }
+
+    /**
+     * @param array $data
+     * @param $id
+     * @return Message
+     */
+    public function update(array $data, $id): Message
+    {
+        $message = $this->find($id);
+        if ($message->isError()) {
+            return $message;
+        }
+
+        /** @var User $user */
+        $user = $message->getData();
+        $data['email'] = $user->email;
+        return parent::update($data, $id);
     }
 
     /**
@@ -41,8 +59,8 @@ class UserService extends Service
     {
         return [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email',
-            'cpf' => 'required|string|size:11|unique:users,cpf',
+            'email' => 'required|string|email|max:255|unique:shopkeepers,email',
+            'cnpj' => 'required|string|size:14|unique:shopkeepers,cnpj',
             'password' => 'required|string|min:6',
         ];
     }
