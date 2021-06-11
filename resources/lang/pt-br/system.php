@@ -38,5 +38,10 @@ return [
         'currently_selected' => 'Atualmente selecionado',
         'start_typing_search_query' => 'Comece a digitar para pesquisar',
         'please_enter_more_characters' => 'Por favor insira mais caracteres',
+        'you_do_not_have_enough_balance' => 'Você não possui saldo suficiente para realizar essa ação.',
+        'the_transaction_value_must_be' => 'O valor da transação precisa ser menor ou igual o valor do saldo.',
+        'unauthorized_transaction' => 'Transação não autorizada.',
+        'authorized_transaction' => 'Transação autorizada.',
+        'you_cant_pay_yourself' => 'Não é possível pagar a si mesmo.',
     ],
 ];

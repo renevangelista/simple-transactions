@@ -4,33 +4,30 @@ namespace App\Service;
 
 use App\Model\Core\Message;
 use App\Service\Base\Service;
-use App\Model\User;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Arr;
 
 class UserService extends Service
 {
     /**
-     * @param array|string[] $columns
+     * @param array $data
+     * @param $id
      * @return Message
      */
-    public function all(array $columns = ['*']): Message
+    public function update(array $data, $id): Message
     {
-        return $this->findBy(
-            [],
-            ['name' => 'asc'],
-            null,
-            null,
-            $columns
-        );
-    }
+        $message = $this->find($id);
+        if ($message->isError()) {
+            return $message;
+        }
 
-    /**
-     * @return mixed
-     */
-    public function broker()
-    {
-        return Password::broker();
+        $dataModel = Arr::only($data, $this->dataManager->getModel()->getFillable());
+        $model = $this->dataManager->update($dataModel, $id);
+
+        if ($model) {
+            return $this->message->success(trans('system.messages.updated_successfully'), $model);
+        }
+
+        return $this->message->error(trans('system.messages.it_was_not_possible_update'), null, '');
     }
 
     /**
@@ -45,13 +42,5 @@ class UserService extends Service
             'cpf' => 'required|string|size:11|unique:users,cpf',
             'password' => 'required|string|min:6',
         ];
-    }
-
-    /**
-     * @return array
-     */
-    public function messages(): array
-    {
-        return [];
     }
 }

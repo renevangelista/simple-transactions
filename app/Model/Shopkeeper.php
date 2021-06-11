@@ -2,14 +2,20 @@
 
 namespace App\Model;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 
+/**
+ * @property string name
+ * @property string email
+ * @property string cnpj
+ * @property double balance
+ */
 class Shopkeeper extends Authenticatable
 {
-    use HasApiTokens, Notifiable;
+    use HasApiTokens;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -21,6 +27,7 @@ class Shopkeeper extends Authenticatable
         'email',
         'cnpj',
         'password',
+        'balance',
     ];
 
     /**

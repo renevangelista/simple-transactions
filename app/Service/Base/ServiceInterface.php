@@ -121,7 +121,4 @@ interface ServiceInterface
      * @return array
      */
     public function rules($id): array;
-
-    /** @return array */
-    public function messages(): array;
 }

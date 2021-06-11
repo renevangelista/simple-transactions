@@ -38,5 +38,10 @@ return [
         'currently_selected' => 'Currently Selected',
         'start_typing_search_query' => 'Start typing a search query',
         'please_enter_more_characters' => 'Please enter more characters',
+        'you_do_not_have_enough_balance' => 'You do not have enough balance to perform this action.',
+        'the_transaction_value_must_be' => 'The transaction value must be less than or equal to the balance amount.',
+        'unauthorized_transaction' => 'Unauthorized transaction.',
+        'authorized_transaction' => 'Authorized transaction.',
+        'you_cant_pay_yourself' => 'You can\'t pay yourself.',
     ],
 ];

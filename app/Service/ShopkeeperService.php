@@ -4,27 +4,10 @@ namespace App\Service;
 
 use App\Model\Core\Message;
 use App\Service\Base\Service;
-use App\Model\User;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Arr;
 
 class ShopkeeperService extends Service
 {
-    /**
-     * @param array|string[] $columns
-     * @return Message
-     */
-    public function all(array $columns = ['*']): Message
-    {
-        return $this->findBy(
-            [],
-            ['name' => 'asc'],
-            null,
-            null,
-            $columns
-        );
-    }
-
     /**
      * @param array $data
      * @param $id
@@ -37,18 +20,14 @@ class ShopkeeperService extends Service
             return $message;
         }
 
-        /** @var User $user */
-        $user = $message->getData();
-        $data['email'] = $user->email;
-        return parent::update($data, $id);
-    }
+        $dataModel = Arr::only($data, $this->dataManager->getModel()->getFillable());
+        $model = $this->dataManager->update($dataModel, $id);
 
-    /**
-     * @return mixed
-     */
-    public function broker()
-    {
-        return Password::broker();
+        if ($model) {
+            return $this->message->success(trans('system.messages.updated_successfully'), $model);
+        }
+
+        return $this->message->error(trans('system.messages.it_was_not_possible_update'), null, '');
     }
 
     /**
@@ -63,13 +42,5 @@ class ShopkeeperService extends Service
             'cnpj' => 'required|string|size:14|unique:shopkeepers,cnpj',
             'password' => 'required|string|min:6',
         ];
-    }
-
-    /**
-     * @return array
-     */
-    public function messages(): array
-    {
-        return [];
     }
 }
