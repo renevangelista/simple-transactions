@@ -56,6 +56,8 @@ return [
 
     'asset_url' => env('ASSET_URL', null),
 
+    'external_validator_url' => env('EXTERNAL_VALIDATOR_URL'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

@@ -1,13 +1,21 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Passport\HasApiTokens;
 
+/**
+ * @property int id
+ * @property string name
+ * @property string email
+ * @property string cpf
+ * @property double balance
+ */
 class User extends Authenticatable
 {
+    use HasApiTokens;
     use Notifiable;
 
     /**
@@ -16,7 +24,11 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'email',
+        'cpf',
+        'password',
+        'balance',
     ];
 
     /**
@@ -25,7 +37,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
     /**

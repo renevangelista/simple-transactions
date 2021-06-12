@@ -5,17 +5,18 @@ namespace App\Service\Base;
 use Exception;
 use App\DataManager\Base\DataManager;
 use App\Model\Core\Message;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use PDOException;
 
 /**
  * Class Service
  * @package App\Service\Base
- * @author Filipe Fico
  */
 abstract class Service implements ServiceInterface
 {
@@ -238,7 +239,7 @@ abstract class Service implements ServiceInterface
             }
 
             return $this->message->error(trans('system.messages.it_was_not_possible_delete'), null, '');
-        } catch (\PDOException $exception) {
+        } catch (PDOException $exception) {
             if ($exception->getCode() === '23000') {
                 return $this->message->error(
                     trans('system.messages.it_is_not_possible_to_delete_objects_with_associations'),
@@ -251,7 +252,7 @@ abstract class Service implements ServiceInterface
                 null,
                 $exception->getMessage()
             );
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             return $this->message->error(
                 trans('system.messages.it_was_not_possible_delete'),
                 null,
@@ -294,21 +295,21 @@ abstract class Service implements ServiceInterface
     }
 
     /**
-     * @return mixed
+     * @return Guard
      */
-    public function guard()
+    public function guard(): Guard
     {
         return Auth::guard();
     }
 
     /**
      * @param array $data
-     * @param null $id
+     * @param int $id
      * @return Message
      */
     public function validate(array $data, $id = null): Message
     {
-        $validator = Validator::make($data, $this->rules($id), $this->messages());
+        $validator = Validator::make($data, $this->rules($id));
         if ($validator->fails()) {
             return $this->message->error(trans('system.messages.some_field_is_not_valid'), null, $validator->errors());
         }
@@ -338,9 +339,4 @@ abstract class Service implements ServiceInterface
      * @return array
      */
     abstract public function rules($id): array;
-
-    /**
-     * @return array
-     */
-    abstract public function messages(): array;
 }

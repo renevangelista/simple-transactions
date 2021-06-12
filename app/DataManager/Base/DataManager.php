@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class DataManager
  * @package App\DataManager\Base
- * @author Filipe Fico
  */
 class DataManager implements DataManagerInterface
 {

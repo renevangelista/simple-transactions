@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Interface DataManagerInterface
  * @package App\DataManager\Base
- * @author Filipe Fico
  */
 interface DataManagerInterface
 {

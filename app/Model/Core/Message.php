@@ -5,7 +5,6 @@ namespace App\Model\Core;
 /**
  * Class Message
  * @package App\Model\Core
- * @author Filipe Fico
  */
 class Message
 {
