@@ -64,13 +64,13 @@ class DataManager implements DataManagerInterface
 
     /**
      * Show the record with the given id
-     * @param $id
+     * @param $identifier
      * @param array $columns
      * @return Builder|Builder[]|Collection|Model
      */
-    public function find($id, array $columns = ['*'])
+    public function find($identifier, array $columns = ['*'])
     {
-        $collection = $this->newQuery()->findOrFail($id, $columns);
+        $collection = $this->newQuery()->findOrFail($identifier, $columns);
         $this->clearQuery();
 
         return $collection;
@@ -165,77 +165,15 @@ class DataManager implements DataManagerInterface
     /**
      * @param Builder $query
      * @param array $criteria
-     * @param bool $orWhere
-     * @param bool $notWhere
      * @return Builder
      */
     protected function addCriteriaConditions(
         Builder $query,
-        array $criteria,
-        bool $orWhere = false,
-        bool $notWhere = false
+        array $criteria
     ): Builder {
-        $where = $this->whereType($orWhere);
-        $whereIn = $this->whereInType($orWhere, $notWhere);
-        $whereNull = $this->whereNullType($orWhere, $notWhere);
+        $where = $this->whereType();
 
         foreach ($criteria as $key => $value) {
-            $method = explode('.', $key)[0];
-            if (method_exists($this->model, $method)) {
-                if (is_array($value)) {
-                    $query->whereHas(
-                        $key,
-                        function (Builder $query) use ($value, $orWhere) {
-                            $this->addCriteriaConditions($query, $value, $orWhere);
-                        }
-                    );
-                }
-                continue;
-            }
-
-            if (strtolower($key) === 'or') {
-                $query->where(
-                    function (Builder $query) use ($value, $notWhere) {
-                        $this->addCriteriaConditions($query, $value, true, $notWhere);
-                    }
-                );
-                continue;
-            }
-
-            if (strtolower($key) === 'not') {
-                $query->where(
-                    function (Builder $query) use ($value, $orWhere) {
-                        $this->addCriteriaConditions($query, $value, $orWhere, true);
-                    }
-                );
-                continue;
-            }
-
-            if (is_array($value)) {
-                if ($value === array_values($value)) {
-                    if (in_array(null, $value)) {
-                        $query->$where(
-                            function (Builder $query) use ($key, $value) {
-                                $query->whereIn($key, $value);
-                                $query->orWhereNull($key);
-                            }
-                        );
-                        continue;
-                    }
-
-                    $query->$whereIn($key, $value);
-                    continue;
-                }
-
-                foreach ($value as $operator => $v) {
-                    $query->$where($key, $operator, $v);
-                }
-                continue;
-            } elseif (is_null($value)) {
-                $query->$whereNull($key);
-                continue;
-            }
-
             $query->$where($key, $value);
         }
 
@@ -243,50 +181,11 @@ class DataManager implements DataManagerInterface
     }
 
     /**
-     * @param $orWhere
      * @return string
      */
-    private function whereType(bool $orWhere): string
+    private function whereType(): string
     {
-        if ($orWhere) {
-            return 'orWhere';
-        }
         return 'where';
-    }
-
-    /**
-     * @param bool $orWhere
-     * @param bool $notWhere
-     * @return string
-     */
-    private function whereInType(bool $orWhere, bool $notWhere): string
-    {
-        if ($orWhere && $notWhere) {
-            return 'orWhereNotIn';
-        } elseif ($orWhere) {
-            return 'orWhereIn';
-        } elseif ($notWhere) {
-            return 'whereNotIn';
-        }
-
-        return 'whereIn';
-    }
-
-    /**
-     * @param bool $orWhere
-     * @param bool $notWhere
-     * @return string
-     */
-    private function whereNullType(bool $orWhere, bool $notWhere): string
-    {
-        if ($orWhere && $notWhere) {
-            return 'orWhereNotNull';
-        } elseif ($orWhere) {
-            return 'orWhereNull';
-        } elseif ($notWhere) {
-            return 'whereNotNull';
-        }
-        return 'whereNull';
     }
 
     /**
@@ -305,12 +204,12 @@ class DataManager implements DataManagerInterface
     /**
      * Update record in the database
      * @param array $data
-     * @param $id
+     * @param $identifier
      * @return int
      */
-    public function update(array $data, $id): int
+    public function update(array $data, $identifier): int
     {
-        $record = $this->find($id);
+        $record = $this->find($identifier);
         $updated = $record->update($data);
         $this->clearQuery();
 
@@ -319,13 +218,13 @@ class DataManager implements DataManagerInterface
 
     /**
      * Remove record from the database
-     * @param $id
+     * @param $identifier
      * @return mixed
      */
-    public function delete($id)
+    public function delete($identifier)
     {
         try {
-            $record = $this->find($id);
+            $record = $this->find($identifier);
             $deleted = $record->delete();
             $this->clearQuery();
 

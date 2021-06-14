@@ -22,18 +22,18 @@ class LoginController extends Controller
         }
 
         $user = User::where('email', $request->email)->first();
-        if ($user) {
-            if (Hash::check($request->password, $user->password)) {
-                $token = $user->createToken('Simple Transactions Password Grant Client')->accessToken;
-                $response = ['token' => $token];
-                return response($response);
-            } else {
-                $response = ["message" => "Password mismatch"];
-                return response($response, 422);
-            }
-        } else {
+        if (!$user) {
             $response = ["message" => 'User does not exist'];
             return response($response, 422);
         }
+
+        if (!Hash::check($request->password, $user->password)) {
+            $response = ["message" => "Password mismatch"];
+            return response($response, 422);
+        }
+
+        $token = $user->createToken('Simple Transactions Password Grant Client')->accessToken;
+        $response = ['token' => $token];
+        return response($response);
     }
 }

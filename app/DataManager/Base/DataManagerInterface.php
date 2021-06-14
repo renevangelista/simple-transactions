@@ -18,11 +18,11 @@ interface DataManagerInterface
     public function all(array $columns = ['*']);
 
     /**
-     * @param $id
+     * @param $identifier
      * @param array $columns
      * @return mixed
      */
-    public function find($id, array $columns = ['*']);
+    public function find($identifier, array $columns = ['*']);
 
     /**
      * @param array $criteria
@@ -66,16 +66,16 @@ interface DataManagerInterface
 
     /**
      * @param array $data
-     * @param $id
+     * @param $identifier
      * @return mixed
      */
-    public function update(array $data, $id);
+    public function update(array $data, $identifier);
 
     /**
-     * @param $id
+     * @param $identifier
      * @return mixed
      */
-    public function delete($id);
+    public function delete($identifier);
 
     /**
      * @param $relations
