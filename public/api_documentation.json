@@ -1,0 +1,1132 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Simple Transactions API",
+        "description": "This API was developed based on REST technology, following the current technical standards. All of this to make the integration experience as easy as possible. All URLs are friendly and resource-oriented and use HTTP protocol standards for authentication and return codes. All responses are returned in JSON format.",
+        "contact": {},
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000/api/v1",
+            "variables": {}
+        }
+    ],
+    "paths": {
+        "/user/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Register User",
+                "operationId": "RegisterUser",
+                "parameters": [
+                    {
+                        "name": "Accept",
+                        "in": "header",
+                        "description": "",
+                        "required": true,
+                        "style": "simple",
+                        "schema": {
+                            "type": "string",
+                            "example": "application/json"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RegisterUserRequest"
+                            },
+                            "example": {
+                                "name": "Renan Evangelista",
+                                "cpf": "12919765744",
+                                "email": "renan@email.com",
+                                "password": "123456"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {
+                            "Host": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "127.0.0.1:8000"
+                                    }
+                                }
+                            },
+                            "Date": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "Mon, 14 Jun 2021 13:43:27 GMT"
+                                    }
+                                }
+                            },
+                            "Connection": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "close"
+                                    }
+                                }
+                            },
+                            "X-Powered-By": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "PHP/7.3.28-1+ubuntu20.04.1+deb.sury.org+1"
+                                    }
+                                }
+                            },
+                            "Cache-Control": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "no-cache, private"
+                                    }
+                                }
+                            },
+                            "X-RateLimit-Limit": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "60"
+                                    }
+                                }
+                            },
+                            "X-RateLimit-Remaining": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "59"
+                                    }
+                                }
+                            },
+                            "Access-Control-Allow-Origin": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "*"
+                                    }
+                                }
+                            }
+                        },
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RegisterUser"
+                                },
+                                "example": {
+                                    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZTFkN2I5YjI0NDZkNGRkMmE1NDRjYzQ0NzBhMWUwMmVlNmFlZDNjMjhiNzExNjk3MDQ2ZTBiN2IxOGQzMWY2NDhiYzRiYmNmNDhjOTI3NDEiLCJpYXQiOjE2MjM2NzgyMDcsIm5iZiI6MTYyMzY3ODIwNywiZXhwIjoxNjU1MjE0MjA3LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.NwYDWUpisOuY-llQ8jjVHd2a3gcBxPxBrMWUyQPm4Ilnq8U0X5xMBFUQk-V9FEekaktuix_vjSiOWVlUqhjRkbtr_9J-St7m-Cee1NMQBWe5r7G_wr8KAfqzJS5TdAtt8toRHonGjPHxs9dbw6o3WDvrrYUGW-00CEyDaqLxoe1bZjza0md-T27d041KtA2ldm_sV3QwWIjn0FIv9IcP-y1ah7O1cpFFSbVUopsO2K2l_MVqduKaqWoLakGl5_jX0cHEF7pD8NUgXVNZ1tNrFGSBbO06PaYePLMagIw6mouVOR8QyUgW7rZzK7vkAnc7Xy4xo9LGhpBjqTtMYNUkIlaldUyMNKf8nPUMs3tPjwT7x45dOqUNfzYACh2X4u0owkHtcge0VElPL_1nFjhNzTDJSYSwXRowz775n7eg3I9np3KQxKoo1XcAqzzpUKfOoKzHCJvurJ9AC2UaRcQC8ODPsNEa4hIISylPZHlj3EPZD2LW5tTZNFUHN7rxMZ7COszyh1L9cDwWu1tsaxL4MxZeLD9ESXea33_9Jn4COxN9M4slduYvB5JCIb3BtU2r-QAz4knLHKUrZklhaMbdck3ufRjk4MKfc-va8f-FhmdxiBbyesxjES-aBkAr9Zri3J1xQsQ6d1E29oxZQw0JwDho8ZcmYPKeFknnF5zeDaA"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/shopkeeper/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Register Shopkeeper",
+                "operationId": "RegisterShopkeeper",
+                "parameters": [
+                    {
+                        "name": "Accept",
+                        "in": "header",
+                        "description": "",
+                        "required": true,
+                        "style": "simple",
+                        "schema": {
+                            "type": "string",
+                            "example": "application/json"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RegisterShopkeeperRequest"
+                            },
+                            "example": {
+                                "name": "Renan Evangelista",
+                                "cnpj": "12919765744222",
+                                "email": "renan@email.com",
+                                "password": "123456"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {
+                            "Host": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "127.0.0.1:8000"
+                                    }
+                                }
+                            },
+                            "Date": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "Mon, 14 Jun 2021 13:43:27 GMT"
+                                    }
+                                }
+                            },
+                            "Connection": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "close"
+                                    }
+                                }
+                            },
+                            "X-Powered-By": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "PHP/7.3.28-1+ubuntu20.04.1+deb.sury.org+1"
+                                    }
+                                }
+                            },
+                            "Cache-Control": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "no-cache, private"
+                                    }
+                                }
+                            },
+                            "X-RateLimit-Limit": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "60"
+                                    }
+                                }
+                            },
+                            "X-RateLimit-Remaining": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "59"
+                                    }
+                                }
+                            },
+                            "Access-Control-Allow-Origin": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "*"
+                                    }
+                                }
+                            }
+                        },
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RegisterShopkeeper"
+                                },
+                                "example": {
+                                    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZTFkN2I5YjI0NDZkNGRkMmE1NDRjYzQ0NzBhMWUwMmVlNmFlZDNjMjhiNzExNjk3MDQ2ZTBiN2IxOGQzMWY2NDhiYzRiYmNmNDhjOTI3NDEiLCJpYXQiOjE2MjM2NzgyMDcsIm5iZiI6MTYyMzY3ODIwNywiZXhwIjoxNjU1MjE0MjA3LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.NwYDWUpisOuY-llQ8jjVHd2a3gcBxPxBrMWUyQPm4Ilnq8U0X5xMBFUQk-V9FEekaktuix_vjSiOWVlUqhjRkbtr_9J-St7m-Cee1NMQBWe5r7G_wr8KAfqzJS5TdAtt8toRHonGjPHxs9dbw6o3WDvrrYUGW-00CEyDaqLxoe1bZjza0md-T27d041KtA2ldm_sV3QwWIjn0FIv9IcP-y1ah7O1cpFFSbVUopsO2K2l_MVqduKaqWoLakGl5_jX0cHEF7pD8NUgXVNZ1tNrFGSBbO06PaYePLMagIw6mouVOR8QyUgW7rZzK7vkAnc7Xy4xo9LGhpBjqTtMYNUkIlaldUyMNKf8nPUMs3tPjwT7x45dOqUNfzYACh2X4u0owkHtcge0VElPL_1nFjhNzTDJSYSwXRowz775n7eg3I9np3KQxKoo1XcAqzzpUKfOoKzHCJvurJ9AC2UaRcQC8ODPsNEa4hIISylPZHlj3EPZD2LW5tTZNFUHN7rxMZ7COszyh1L9cDwWu1tsaxL4MxZeLD9ESXea33_9Jn4COxN9M4slduYvB5JCIb3BtU2r-QAz4knLHKUrZklhaMbdck3ufRjk4MKfc-va8f-FhmdxiBbyesxjES-aBkAr9Zri3J1xQsQ6d1E29oxZQw0JwDho8ZcmYPKeFknnF5zeDaA"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/user/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login User",
+                "operationId": "LoginUser",
+                "parameters": [
+                    {
+                        "name": "Accept",
+                        "in": "header",
+                        "description": "",
+                        "required": true,
+                        "style": "simple",
+                        "schema": {
+                            "type": "string",
+                            "example": "application/json"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginUserRequest"
+                            },
+                            "example": {
+                                "email": "renan@email.com",
+                                "password": "123456"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {
+                            "Host": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "127.0.0.1:8000"
+                                    }
+                                }
+                            },
+                            "Date": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "Mon, 14 Jun 2021 13:44:43 GMT"
+                                    }
+                                }
+                            },
+                            "Connection": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "close"
+                                    }
+                                }
+                            },
+                            "X-Powered-By": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "PHP/7.3.28-1+ubuntu20.04.1+deb.sury.org+1"
+                                    }
+                                }
+                            },
+                            "Cache-Control": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "no-cache, private"
+                                    }
+                                }
+                            },
+                            "X-RateLimit-Limit": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "60"
+                                    }
+                                }
+                            },
+                            "X-RateLimit-Remaining": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "58"
+                                    }
+                                }
+                            },
+                            "Access-Control-Allow-Origin": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "*"
+                                    }
+                                }
+                            }
+                        },
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoginUser"
+                                },
+                                "example": {
+                                    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiY2FjMjM3NjUwNzIwMzg3NjkxNjQ3ZjdjMTM2ZjVhMTdjZDJhOTRjMWFlZDZmMDhmMjhhMjkxZDM0MGUzMjBiMDg4YTM5YTdhM2E2OWNiMGYiLCJpYXQiOjE2MjM2NzgyODMsIm5iZiI6MTYyMzY3ODI4MywiZXhwIjoxNjU1MjE0MjgzLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.nZWCh9XoesUATfko9sg6ekTVPDCcwZx4Gt1NvMSR4bWac7DuFt5NO81PqfkUsXxjOYlT86m0_TA_qE09Dtt7_ByrCr4XkHCyai2IB8KYpLgvX37EkHEkKjEIlTuMggWl3NM4c9AeJ-sPZLTQhHXXa_jBpTzOGJrI9aI9fECsCP012Mvf1OrAR3KWAUlU0iA6zx3DiCS_B4UltPE5BWtLOKk8_6OtDjmLND05-TLC-BuUNMyJaD8w1BBqeySda53ycH-7VuBEE2F8dTmQ9tCht1gDGoiJ1STej1-me5Pp-6gsONmRtk9uXmYsXDqA2dW2lahzYzSiMfvdZrGV9cZnpBC4sOOR3DA1v0C_IQkSPbPk6zDeZHsMuFwHgXKOjBYXmGI__Oclcwrv3B_CcZQtRFtT4TWFLSiWnh_8A_dFnOih1A5BaycHVhkY3b0uVtkHDe6OuCjiMKvPa2ao4tYZvZpN5C7nsAGN8Za39brjk5itfMX8Xx5b6ZmF40-Q-ueUgj-UIQeON49iTdHI2cJgmTyPj9bNLeeiW8N6zQfsCKa2pQfhYf72vj7KxdQQd0qBwS3nOtcdVi1sLVsCgG8tIF-ttjdeZAFvxZCz_oKYDp7F1cqWZ3Od76fule7mpVnAEdbJJNt6LdGCO9aEtEsFiDvsMy_v4MkG3H_kviuUrHg"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/shopkeeper/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login Shopkeeper",
+                "operationId": "LoginShopkeeper",
+                "parameters": [
+                    {
+                        "name": "Accept",
+                        "in": "header",
+                        "description": "",
+                        "required": true,
+                        "style": "simple",
+                        "schema": {
+                            "type": "string",
+                            "example": "application/json"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginShopkeeperRequest"
+                            },
+                            "example": {
+                                "email": "renan@email.com",
+                                "password": "123456"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {
+                            "Host": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "127.0.0.1:8000"
+                                    }
+                                }
+                            },
+                            "Date": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "Mon, 14 Jun 2021 13:45:23 GMT"
+                                    }
+                                }
+                            },
+                            "Connection": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "close"
+                                    }
+                                }
+                            },
+                            "X-Powered-By": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "PHP/7.3.28-1+ubuntu20.04.1+deb.sury.org+1"
+                                    }
+                                }
+                            },
+                            "Cache-Control": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "no-cache, private"
+                                    }
+                                }
+                            },
+                            "X-RateLimit-Limit": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "60"
+                                    }
+                                }
+                            },
+                            "X-RateLimit-Remaining": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "57"
+                                    }
+                                }
+                            },
+                            "Access-Control-Allow-Origin": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "*"
+                                    }
+                                }
+                            }
+                        },
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoginShopkeeper"
+                                },
+                                "example": {
+                                    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZjdiOWJhMzhhMjg2NmQxNTRjZWYzYmVmOGYyZGZmNDc4NTI0OGZhNjMyNDc2MjY2ZDA2NDYyNDlhNmQxYjFlMmEyNmU1ZTY1MGNhZDgxNDkiLCJpYXQiOjE2MjM2NzgzMjMsIm5iZiI6MTYyMzY3ODMyMywiZXhwIjoxNjU1MjE0MzIzLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.LjMCNuSgcxozZEOMcFXDJHY-OLxA1Vq5vazowWxkmRtTx13tiXRJUw3W_1T4zQMui4GPBvIMJhZSVYjgFVu0ebDUNLRjTY-celweT9nN9nqh5rjRuK3roKyUFymmtZMviMyR6JR-XBWqMWhseHbb-_6KGRX6LY-rO8mC7ImtCpPNXHH0X5pcBhx90XwpRH3QSOOdNk_CmeM2Fmc8FxsN3VkMgvVF6c5-gqWMhGl8TrgS7S8UkmkJSzN6St-7AzDc8VpjH1ffd6UKjNhSwjgpfwdETgE6WX7B5J8lQRzc-g70V50AbLxgnXgaRBi9d3Lcto9uaEXF88Zqp59cj142hJhrltczfhkDM-5ucZJE22twVAH5FODWL799pwKQV4SpdR9lfVSpLAwAY_uTD7ZnXpdMu13lBS1sdvyfPxyyeFKNgOMy9V1EdLwlOS_XAh2jkUZv8_9Y-6_ZGhk7x4f0O3FHRj3Sxq8IUXEhDVvEofOgFSlM6YDuxPSAIfz9mJKmPj3qcWO6XsEADEwDL_657gUa35EkeUU9uP2KKJMUmH50BJMav2EWdzVez2e6FmJ1LvsINL1AhI-UsXMiGi_XJOEVnrIOAA5nbtnTds31O7ZIntXpprT9mv6sgjdSMs1v-SokUAlTDBrQHZJewf5HP0lFXWBXIKpp_hVg8vtPGV4"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/transaction": {
+            "post": {
+                "tags": [
+                    "Transactions"
+                ],
+                "summary": "Transaction",
+                "operationId": "Transaction",
+                "parameters": [
+                    {
+                        "name": "Accept",
+                        "in": "header",
+                        "description": "",
+                        "required": true,
+                        "style": "simple",
+                        "schema": {
+                            "type": "string",
+                            "example": "application/json"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TransactionRequest"
+                            },
+                            "example": {
+                                "value": 1.0,
+                                "payee": 1,
+                                "payee_type": "user"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "headers": {
+                            "Host": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "127.0.0.1:8000"
+                                    }
+                                }
+                            },
+                            "Date": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "Mon, 14 Jun 2021 13:46:17 GMT"
+                                    }
+                                }
+                            },
+                            "Connection": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "close"
+                                    }
+                                }
+                            },
+                            "X-Powered-By": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "PHP/7.3.28-1+ubuntu20.04.1+deb.sury.org+1"
+                                    }
+                                }
+                            },
+                            "Cache-Control": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "no-cache, private"
+                                    }
+                                }
+                            },
+                            "Access-Control-Allow-Origin": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "*"
+                                    }
+                                }
+                            }
+                        },
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Transaction4011"
+                                },
+                                "example": {
+                                    "message": "Unauthenticated."
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "headers": {
+                            "Host": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "127.0.0.1:8000"
+                                    }
+                                }
+                            },
+                            "Date": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "Mon, 14 Jun 2021 13:47:05 GMT"
+                                    }
+                                }
+                            },
+                            "Connection": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "close"
+                                    }
+                                }
+                            },
+                            "X-Powered-By": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "PHP/7.3.28-1+ubuntu20.04.1+deb.sury.org+1"
+                                    }
+                                }
+                            },
+                            "Cache-Control": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "no-cache, private"
+                                    }
+                                }
+                            },
+                            "X-RateLimit-Limit": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "60"
+                                    }
+                                }
+                            },
+                            "X-RateLimit-Remaining": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "59"
+                                    }
+                                }
+                            },
+                            "Access-Control-Allow-Origin": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "*"
+                                    }
+                                }
+                            }
+                        },
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Transaction4001"
+                                },
+                                "example": {
+                                    "message": "You do not have enough balance to perform this action.",
+                                    "errors": {
+                                        "value": "The transaction value must be less than or equal to the balance amount."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "OK",
+                        "headers": {
+                            "Host": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "127.0.0.1:8000"
+                                    }
+                                }
+                            },
+                            "Date": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "Mon, 14 Jun 2021 13:48:01 GMT"
+                                    }
+                                }
+                            },
+                            "Connection": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "close"
+                                    }
+                                }
+                            },
+                            "X-Powered-By": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "PHP/7.3.28-1+ubuntu20.04.1+deb.sury.org+1"
+                                    }
+                                }
+                            },
+                            "Cache-Control": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "no-cache, private"
+                                    }
+                                }
+                            },
+                            "X-RateLimit-Limit": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "60"
+                                    }
+                                }
+                            },
+                            "X-RateLimit-Remaining": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "56"
+                                    }
+                                }
+                            },
+                            "Access-Control-Allow-Origin": {
+                                "content": {
+                                    "text/plain": {
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "example": "*"
+                                    }
+                                }
+                            }
+                        },
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Transaction4011"
+                                },
+                                "example": {
+                                    "message": "Success"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "RegisterUserRequest": {
+                "title": "RegisterUserRequest",
+                "required": [
+                    "name",
+                    "cpf",
+                    "email",
+                    "password"
+                ],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "cpf": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "name": "Renan Evangelista",
+                    "cpf": "12919765744",
+                    "email": "renan@email.com",
+                    "password": "123456"
+                }
+            },
+            "RegisterUser": {
+                "title": "RegisterUser",
+                "required": [
+                    "token"
+                ],
+                "type": "object",
+                "properties": {
+                    "token": {
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZTFkN2I5YjI0NDZkNGRkMmE1NDRjYzQ0NzBhMWUwMmVlNmFlZDNjMjhiNzExNjk3MDQ2ZTBiN2IxOGQzMWY2NDhiYzRiYmNmNDhjOTI3NDEiLCJpYXQiOjE2MjM2NzgyMDcsIm5iZiI6MTYyMzY3ODIwNywiZXhwIjoxNjU1MjE0MjA3LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.NwYDWUpisOuY-llQ8jjVHd2a3gcBxPxBrMWUyQPm4Ilnq8U0X5xMBFUQk-V9FEekaktuix_vjSiOWVlUqhjRkbtr_9J-St7m-Cee1NMQBWe5r7G_wr8KAfqzJS5TdAtt8toRHonGjPHxs9dbw6o3WDvrrYUGW-00CEyDaqLxoe1bZjza0md-T27d041KtA2ldm_sV3QwWIjn0FIv9IcP-y1ah7O1cpFFSbVUopsO2K2l_MVqduKaqWoLakGl5_jX0cHEF7pD8NUgXVNZ1tNrFGSBbO06PaYePLMagIw6mouVOR8QyUgW7rZzK7vkAnc7Xy4xo9LGhpBjqTtMYNUkIlaldUyMNKf8nPUMs3tPjwT7x45dOqUNfzYACh2X4u0owkHtcge0VElPL_1nFjhNzTDJSYSwXRowz775n7eg3I9np3KQxKoo1XcAqzzpUKfOoKzHCJvurJ9AC2UaRcQC8ODPsNEa4hIISylPZHlj3EPZD2LW5tTZNFUHN7rxMZ7COszyh1L9cDwWu1tsaxL4MxZeLD9ESXea33_9Jn4COxN9M4slduYvB5JCIb3BtU2r-QAz4knLHKUrZklhaMbdck3ufRjk4MKfc-va8f-FhmdxiBbyesxjES-aBkAr9Zri3J1xQsQ6d1E29oxZQw0JwDho8ZcmYPKeFknnF5zeDaA"
+                }
+            },
+            "RegisterShopkeeperRequest": {
+                "title": "RegisterShopkeeperRequest",
+                "required": [
+                    "name",
+                    "cnpj",
+                    "email",
+                    "password"
+                ],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "cnpj": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "name": "Renan Evangelista",
+                    "cnpj": "12919765744222",
+                    "email": "renan@email.com",
+                    "password": "123456"
+                }
+            },
+            "RegisterShopkeeper": {
+                "title": "RegisterShopkeeper",
+                "required": [
+                    "token"
+                ],
+                "type": "object",
+                "properties": {
+                    "token": {
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZTFkN2I5YjI0NDZkNGRkMmE1NDRjYzQ0NzBhMWUwMmVlNmFlZDNjMjhiNzExNjk3MDQ2ZTBiN2IxOGQzMWY2NDhiYzRiYmNmNDhjOTI3NDEiLCJpYXQiOjE2MjM2NzgyMDcsIm5iZiI6MTYyMzY3ODIwNywiZXhwIjoxNjU1MjE0MjA3LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.NwYDWUpisOuY-llQ8jjVHd2a3gcBxPxBrMWUyQPm4Ilnq8U0X5xMBFUQk-V9FEekaktuix_vjSiOWVlUqhjRkbtr_9J-St7m-Cee1NMQBWe5r7G_wr8KAfqzJS5TdAtt8toRHonGjPHxs9dbw6o3WDvrrYUGW-00CEyDaqLxoe1bZjza0md-T27d041KtA2ldm_sV3QwWIjn0FIv9IcP-y1ah7O1cpFFSbVUopsO2K2l_MVqduKaqWoLakGl5_jX0cHEF7pD8NUgXVNZ1tNrFGSBbO06PaYePLMagIw6mouVOR8QyUgW7rZzK7vkAnc7Xy4xo9LGhpBjqTtMYNUkIlaldUyMNKf8nPUMs3tPjwT7x45dOqUNfzYACh2X4u0owkHtcge0VElPL_1nFjhNzTDJSYSwXRowz775n7eg3I9np3KQxKoo1XcAqzzpUKfOoKzHCJvurJ9AC2UaRcQC8ODPsNEa4hIISylPZHlj3EPZD2LW5tTZNFUHN7rxMZ7COszyh1L9cDwWu1tsaxL4MxZeLD9ESXea33_9Jn4COxN9M4slduYvB5JCIb3BtU2r-QAz4knLHKUrZklhaMbdck3ufRjk4MKfc-va8f-FhmdxiBbyesxjES-aBkAr9Zri3J1xQsQ6d1E29oxZQw0JwDho8ZcmYPKeFknnF5zeDaA"
+                }
+            },
+            "LoginUserRequest": {
+                "title": "LoginUserRequest",
+                "required": [
+                    "email",
+                    "password"
+                ],
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "email": "renan@email.com",
+                    "password": "123456"
+                }
+            },
+            "LoginUser": {
+                "title": "LoginUser",
+                "required": [
+                    "token"
+                ],
+                "type": "object",
+                "properties": {
+                    "token": {
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiY2FjMjM3NjUwNzIwMzg3NjkxNjQ3ZjdjMTM2ZjVhMTdjZDJhOTRjMWFlZDZmMDhmMjhhMjkxZDM0MGUzMjBiMDg4YTM5YTdhM2E2OWNiMGYiLCJpYXQiOjE2MjM2NzgyODMsIm5iZiI6MTYyMzY3ODI4MywiZXhwIjoxNjU1MjE0MjgzLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.nZWCh9XoesUATfko9sg6ekTVPDCcwZx4Gt1NvMSR4bWac7DuFt5NO81PqfkUsXxjOYlT86m0_TA_qE09Dtt7_ByrCr4XkHCyai2IB8KYpLgvX37EkHEkKjEIlTuMggWl3NM4c9AeJ-sPZLTQhHXXa_jBpTzOGJrI9aI9fECsCP012Mvf1OrAR3KWAUlU0iA6zx3DiCS_B4UltPE5BWtLOKk8_6OtDjmLND05-TLC-BuUNMyJaD8w1BBqeySda53ycH-7VuBEE2F8dTmQ9tCht1gDGoiJ1STej1-me5Pp-6gsONmRtk9uXmYsXDqA2dW2lahzYzSiMfvdZrGV9cZnpBC4sOOR3DA1v0C_IQkSPbPk6zDeZHsMuFwHgXKOjBYXmGI__Oclcwrv3B_CcZQtRFtT4TWFLSiWnh_8A_dFnOih1A5BaycHVhkY3b0uVtkHDe6OuCjiMKvPa2ao4tYZvZpN5C7nsAGN8Za39brjk5itfMX8Xx5b6ZmF40-Q-ueUgj-UIQeON49iTdHI2cJgmTyPj9bNLeeiW8N6zQfsCKa2pQfhYf72vj7KxdQQd0qBwS3nOtcdVi1sLVsCgG8tIF-ttjdeZAFvxZCz_oKYDp7F1cqWZ3Od76fule7mpVnAEdbJJNt6LdGCO9aEtEsFiDvsMy_v4MkG3H_kviuUrHg"
+                }
+            },
+            "LoginShopkeeperRequest": {
+                "title": "LoginShopkeeperRequest",
+                "required": [
+                    "email",
+                    "password"
+                ],
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "email": "renan@email.com",
+                    "password": "123456"
+                }
+            },
+            "LoginShopkeeper": {
+                "title": "LoginShopkeeper",
+                "required": [
+                    "token"
+                ],
+                "type": "object",
+                "properties": {
+                    "token": {
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZjdiOWJhMzhhMjg2NmQxNTRjZWYzYmVmOGYyZGZmNDc4NTI0OGZhNjMyNDc2MjY2ZDA2NDYyNDlhNmQxYjFlMmEyNmU1ZTY1MGNhZDgxNDkiLCJpYXQiOjE2MjM2NzgzMjMsIm5iZiI6MTYyMzY3ODMyMywiZXhwIjoxNjU1MjE0MzIzLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.LjMCNuSgcxozZEOMcFXDJHY-OLxA1Vq5vazowWxkmRtTx13tiXRJUw3W_1T4zQMui4GPBvIMJhZSVYjgFVu0ebDUNLRjTY-celweT9nN9nqh5rjRuK3roKyUFymmtZMviMyR6JR-XBWqMWhseHbb-_6KGRX6LY-rO8mC7ImtCpPNXHH0X5pcBhx90XwpRH3QSOOdNk_CmeM2Fmc8FxsN3VkMgvVF6c5-gqWMhGl8TrgS7S8UkmkJSzN6St-7AzDc8VpjH1ffd6UKjNhSwjgpfwdETgE6WX7B5J8lQRzc-g70V50AbLxgnXgaRBi9d3Lcto9uaEXF88Zqp59cj142hJhrltczfhkDM-5ucZJE22twVAH5FODWL799pwKQV4SpdR9lfVSpLAwAY_uTD7ZnXpdMu13lBS1sdvyfPxyyeFKNgOMy9V1EdLwlOS_XAh2jkUZv8_9Y-6_ZGhk7x4f0O3FHRj3Sxq8IUXEhDVvEofOgFSlM6YDuxPSAIfz9mJKmPj3qcWO6XsEADEwDL_657gUa35EkeUU9uP2KKJMUmH50BJMav2EWdzVez2e6FmJ1LvsINL1AhI-UsXMiGi_XJOEVnrIOAA5nbtnTds31O7ZIntXpprT9mv6sgjdSMs1v-SokUAlTDBrQHZJewf5HP0lFXWBXIKpp_hVg8vtPGV4"
+                }
+            },
+            "TransactionRequest": {
+                "title": "TransactionRequest",
+                "required": [
+                    "value",
+                    "payee",
+                    "payee_type"
+                ],
+                "type": "object",
+                "properties": {
+                    "value": {
+                        "type": "number"
+                    },
+                    "payee": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "payee_type": {
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "value": 1.0,
+                    "payee": 1,
+                    "payee_type": "user"
+                }
+            },
+            "Transaction4011": {
+                "title": "Transaction4011",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "message": "Unauthenticated."
+                }
+            },
+            "Errors": {
+                "title": "Errors",
+                "required": [
+                    "value"
+                ],
+                "type": "object",
+                "properties": {
+                    "value": {
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "value": "The transaction value must be less than or equal to the balance amount."
+                }
+            },
+            "Transaction4001": {
+                "title": "Transaction4001",
+                "required": [
+                    "message",
+                    "errors"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    },
+                    "errors": {
+                        "$ref": "#/components/schemas/Errors"
+                    }
+                },
+                "example": {
+                    "message": "You do not have enough balance to perform this action.",
+                    "errors": {
+                        "value": "The transaction value must be less than or equal to the balance amount."
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "httpBearer": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "security": [
+        {
+            "httpBearer": []
+        }
+    ],
+    "tags": [
+        {
+            "name": "Auth"
+        },
+        {
+            "name": "Transactions",
+            "description": ""
+        }
+    ]
+}

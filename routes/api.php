@@ -17,6 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::group([
     'prefix' => 'v1'
 ], function () {
+    Route::get('docs', function () {
+        return view('documentation');
+    })->name('documentation');
+
     Route::group([
         'prefix' => 'user'
     ], function () {
