@@ -12,17 +12,11 @@ use Illuminate\Contracts\Auth\Guard;
 interface ServiceInterface
 {
     /**
-     * @param array $columns
-     * @return mixed
-     */
-    public function all(array $columns = ['*']);
-
-    /**
-     * @param $id
+     * @param $identifier
      * @param array $columns
      * @return Message
      */
-    public function find($id, array $columns = ['*']): Message;
+    public function find($identifier, array $columns = ['*']): Message;
 
     /**
      * @param array $criteria
@@ -41,40 +35,6 @@ interface ServiceInterface
     ): Message;
 
     /**
-     * @param array $criteria
-     * @param array|null $orderBy
-     * @param null $limit
-     * @param null $offset
-     * @param array $columns
-     * @return Message
-     */
-    public function findOneBy(
-        array $criteria = [],
-        array $orderBy = null,
-        $limit = null,
-        $offset = null,
-        array $columns = ['*']
-    ): Message;
-
-    /**
-     * @param array $searchCriteria
-     * @param array $criteria
-     * @param array|null $orderBy
-     * @param null $limit
-     * @param null $offset
-     * @param array $columns
-     * @return Message
-     */
-    public function searchBy(
-        array $searchCriteria = [],
-        array $criteria = [],
-        array $orderBy = null,
-        $limit = null,
-        $offset = null,
-        array $columns = ['*']
-    ): Message;
-
-    /**
      * @param array $data
      * @return Message
      */
@@ -82,16 +42,10 @@ interface ServiceInterface
 
     /**
      * @param array $data
-     * @param $id
+     * @param $identifier
      * @return Message
      */
-    public function update(array $data, $id): Message;
-
-    /**
-     * @param $id
-     * @return Message
-     */
-    public function delete($id): Message;
+    public function update(array $data, $identifier): Message;
 
     /**
      * @return Guard
@@ -100,10 +54,10 @@ interface ServiceInterface
 
     /**
      * @param array $data
-     * @param null $id
+     * @param null $identifier
      * @return mixed
      */
-    public function validate(array $data, $id = null);
+    public function validate(array $data, $identifier = null);
 
     /**
      * @param array $relations
@@ -117,8 +71,8 @@ interface ServiceInterface
     public function clearWith();
 
     /**
-     * @param $id
+     * @param $identifier
      * @return array
      */
-    public function rules($id): array;
+    public function rules($identifier): array;
 }

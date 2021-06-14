@@ -81,8 +81,8 @@ class TransactionService
             return $message;
         }
 
-        $externalValidatorService = new ExternalValidatorService();
-        $message = $externalValidatorService->validate($data);
+        $validatorService = new ExternalValidatorService();
+        $message = $validatorService->validate($data);
         if ($message->isError()) {
             return $message;
         }

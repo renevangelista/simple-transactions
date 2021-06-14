@@ -47,29 +47,13 @@ abstract class Service implements ServiceInterface
     }
 
     /**
+     * @param mixed $identifier
      * @param array $columns
      * @return Message
      */
-    public function all(array $columns = ['*']): Message
+    public function find($identifier, array $columns = ['*']): Message
     {
-        $models = $this->dataManager->with($this->relations)->all($columns);
-        $this->clearWith();
-
-        if ($models) {
-            return $this->message->success(trans('system.messages.success'), $models);
-        }
-
-        return $this->message->error(trans('system.messages.list_could_not_be_retrieved'), null, '');
-    }
-
-    /**
-     * @param mixed $id
-     * @param array $columns
-     * @return Message
-     */
-    public function find($id, array $columns = ['*']): Message
-    {
-        $model = $this->dataManager->with($this->relations)->find($id, $columns);
+        $model = $this->dataManager->with($this->relations)->find($identifier, $columns);
         $this->clearWith();
 
         if ($model) {
@@ -105,74 +89,6 @@ abstract class Service implements ServiceInterface
     }
 
     /**
-     * @param array $criteria
-     * @param array|null $orderBy
-     * @param null $limit
-     * @param null $offset
-     * @param array $columns
-     * @return Message
-     *
-     * @throws ModelNotFoundException
-     */
-    public function findOneBy(
-        array $criteria = [],
-        array $orderBy = null,
-        $limit = null,
-        $offset = null,
-        array $columns = ['*']
-    ): Message {
-        $message = $this->findBy($criteria, $orderBy, $limit, $offset, $columns);
-
-        if ($message->isError()) {
-            return $this->message->error(trans('system.messages.item_could_not_be_retrieved'), null, '');
-        }
-
-        /** @var Collection $collection */
-        $collection = $message->getData();
-        $model = $collection->first();
-
-        if ($model == null) {
-            throw (new ModelNotFoundException());
-        }
-
-        return $this->message->success($message->getMessage(), $model);
-    }
-
-    /**
-     * @param array $searchCriteria
-     * @param array $criteria
-     * @param array|null $orderBy
-     * @param null $limit
-     * @param null $offset
-     * @param array $columns
-     * @return Message
-     */
-    public function searchBy(
-        array $searchCriteria = [],
-        array $criteria = [],
-        array $orderBy = null,
-        $limit = null,
-        $offset = null,
-        array $columns = ['*']
-    ): Message {
-        $model = $this->dataManager->with($this->relations)->searchBy(
-            $searchCriteria,
-            $criteria,
-            $orderBy,
-            $limit,
-            $offset,
-            $columns
-        );
-        $this->clearWith();
-
-        if ($model) {
-            return $this->message->success(trans('system.messages.success'), $model);
-        }
-
-        return $this->message->error(trans('system.messages.list_could_not_be_retrieved'), null, '');
-    }
-
-    /**
      * @param array $data
      * @return Message
      */
@@ -195,70 +111,29 @@ abstract class Service implements ServiceInterface
 
     /**
      * @param array $data
-     * @param $id
+     * @param $identifier
      * @return Message
      */
-    public function update(array $data, $id): Message
+    public function update(array $data, $identifier): Message
     {
-        $message = $this->find($id);
+        $message = $this->find($identifier);
         if ($message->isError()) {
             return $message;
         }
 
-        $message = $this->validate($data, $id);
+        $message = $this->validate($data, $identifier);
         if ($message->isError()) {
             return $message;
         }
 
         $dataModel = Arr::only($data, $this->dataManager->getModel()->getFillable());
-        $model = $this->dataManager->update($dataModel, $id);
+        $model = $this->dataManager->update($dataModel, $identifier);
 
         if ($model) {
             return $this->message->success(trans('system.messages.updated_successfully'), $model);
         }
 
         return $this->message->error(trans('system.messages.it_was_not_possible_update'), null, '');
-    }
-
-    /**
-     * @param mixed $id
-     * @return Message
-     */
-    public function delete($id): Message
-    {
-        try {
-            $message = $this->find($id);
-            if ($message->isError()) {
-                return $message;
-            }
-
-            $model = $this->dataManager->delete($id);
-
-            if ($model) {
-                return $this->message->success(trans('system.messages.successfully_deleted'), $model);
-            }
-
-            return $this->message->error(trans('system.messages.it_was_not_possible_delete'), null, '');
-        } catch (PDOException $exception) {
-            if ($exception->getCode() === '23000') {
-                return $this->message->error(
-                    trans('system.messages.it_is_not_possible_to_delete_objects_with_associations'),
-                    null,
-                    $exception->getMessage()
-                );
-            }
-            return $this->message->error(
-                trans('system.messages.it_was_not_possible_delete'),
-                null,
-                $exception->getMessage()
-            );
-        } catch (Exception $exception) {
-            return $this->message->error(
-                trans('system.messages.it_was_not_possible_delete'),
-                null,
-                $exception->getMessage()
-            );
-        }
     }
 
     /**
@@ -274,14 +149,14 @@ abstract class Service implements ServiceInterface
                 "Undefined method '$name'. The method name must start with either findBy or findOneBy!"
             );
         } elseif (substr($name, 0, 6) == 'findBy') {
-            $by = substr($name, 6, strlen($name));
+            $findBy = substr($name, 6, strlen($name));
             $name = 'findBy';
         } elseif (substr($name, 0, 9) == 'findOneBy') {
-            $by = substr($name, 9, strlen($name));
+            $findBy = substr($name, 9, strlen($name));
             $name = 'findOneBy';
         }
 
-        $fieldName = lcfirst($by);
+        $fieldName = lcfirst($findBy);
 
         if ($this->dataManager->getModel()->isFillable($fieldName) == false) {
             throw new Exception(
@@ -304,12 +179,12 @@ abstract class Service implements ServiceInterface
 
     /**
      * @param array $data
-     * @param int $id
+     * @param null $identifier
      * @return Message
      */
-    public function validate(array $data, $id = null): Message
+    public function validate(array $data, $identifier = null): Message
     {
-        $validator = Validator::make($data, $this->rules($id));
+        $validator = Validator::make($data, $this->rules($identifier));
         if ($validator->fails()) {
             return $this->message->error(trans('system.messages.some_field_is_not_valid'), null, $validator->errors());
         }
@@ -335,8 +210,8 @@ abstract class Service implements ServiceInterface
     }
 
     /**
-     * @param mixed $id
+     * @param $identifier
      * @return array
      */
-    abstract public function rules($id): array;
+    abstract public function rules($identifier): array;
 }

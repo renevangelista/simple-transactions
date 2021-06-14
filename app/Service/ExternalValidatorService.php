@@ -35,6 +35,7 @@ class ExternalValidatorService
     /**
      * @param array $data
      * @return Message
+     * @SuppressWarnings("unused")
      */
     public function validate(array $data): Message
     {
